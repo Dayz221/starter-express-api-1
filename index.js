@@ -23,11 +23,15 @@ app.use('/api/auth', authRouter)
 app.use('/api', appRouter)
 startCheckTasks()
 
+app.get('/', (req, res) => {
+    res.status(200).send('OK')
+})
+
 app.listen(PORT, (err) => {
     if (err) {
         console.log(color.red(err))
         return
     }
 
-    console.log(color.yellow(`Server started on http://localhost:${PORT}`))
+    console.log(color.yellow(`Server started on port: ${PORT}`))
 })
