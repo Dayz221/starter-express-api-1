@@ -36,6 +36,14 @@ const sendNotifications = async (task, user) => {
     }
 }
 
+const deletePastTask = async (task, user) => {
+    const curTime = new Date().getTime()
+    if (curTime - task.end > 3 * 24 * 60 * 60 * 1000) {
+        await user.updateOne({ $pull: { tasks: task._id } })
+        await task.deleteOne()
+    }
+}
+
 export const startCheckTasks = async () => {
     webPush.setVapidDetails(
         "mailto: <rutuchenal37@gmail.com>",
@@ -51,6 +59,7 @@ export const startCheckTasks = async () => {
                 user.tasks.forEach(async taskid => {
                     const task = await Tasks.findById(taskid)
                     sendNotifications(task, user)
+                    deletePastTask(task, user)
                 })
             }
 

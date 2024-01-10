@@ -63,7 +63,7 @@ class AppController {
             const user = await Users.findById(user_id)
 
             await user.updateOne({ $pull: { tasks: task_id } })
-            user.save()
+            await user.save()
             await Tasks.findOneAndDelete({ _id: task_id })
             return res.status(200).json({ message: "Заметка успешно удалена." })
 
