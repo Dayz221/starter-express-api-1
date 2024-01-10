@@ -23,7 +23,7 @@ app.use('/api/auth', authRouter)
 app.use('/api', appRouter)
 startCheckTasks()
 
-app.get('/', (req, res) => {
+app.head('/', (req, res) => {
     res.status(200).send('OK')
 })
 
